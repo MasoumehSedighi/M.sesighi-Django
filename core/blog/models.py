@@ -1,14 +1,18 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 
-class Blog(models.Model):
+#getting user model object
+User = get_user_model()
+
+class Post(models.Model):
     """
-    Blog model for app
+    Post model for app
     """
     title = models.CharField(max_length=255)
     image = models.ImageField(null=True, blank=True)
-    author = models.ForeignKey('User', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     catgory = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
     content = models.TextField()
     status = models.BooleanField
@@ -19,7 +23,7 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
     
-class Caregory(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
