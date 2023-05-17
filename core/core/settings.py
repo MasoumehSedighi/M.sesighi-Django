@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # DEBUG = True
 DEBUG = config("DEBUG",cast=bool)
 
-ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')], default="*")
 
 
 # Application definition
@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
-    'blog'
+    'accounts'
+    # 'blog'
 ]
 
 MIDDLEWARE = [
@@ -126,3 +126,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'accounts.User'

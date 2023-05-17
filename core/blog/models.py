@@ -8,7 +8,7 @@ class Blog(models.Model):
     """
     title = models.CharField(max_length=255)
     image = models.ImageField(null=True, blank=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey('User', on_delete=models.CASCADE)
     catgory = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
     content = models.TextField()
     status = models.BooleanField
