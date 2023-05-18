@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.views.generic.base import TemplateView
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic.base import TemplateView, RedirectView
 from .models import Post
 # Create your views here.
 
@@ -23,3 +23,19 @@ class IndexView(TemplateView):
         context["posts"] = Post.objects.all()
         return context
 
+
+def redirectToDjango(request):
+    """
+    a function bases view to redirect Django site
+    """
+
+    return redirect("https://www.djangoproject.com/")
+
+
+class RedirectToDjango(RedirectView):
+    url = "https://www.djangoproject.com/"
+
+    def get_redirect_url(self, *args, **kwargs):
+        post = get_object_or_404(Post, pk=kwargs["pk"])
+        print(post)
+        return super().get_redirect_url(*args, **kwargs)
