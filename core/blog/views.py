@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import ListView, DetailView, FormView
-from .form import PostForm
+from .forms import PostForm
 from .models import Post
 
 # Create your views here.
