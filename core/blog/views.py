@@ -64,6 +64,9 @@ class PostDetailView(DetailView):
 
 
 class PostCreateView(FormView):
+    """
+    create a post 
+    """
     template_name = "blog/post_create.html"
     form_class = PostForm
     success_url = "/blog/post/"
