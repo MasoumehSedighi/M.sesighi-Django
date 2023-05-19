@@ -1,10 +1,12 @@
 from typing import Any
 from django.db.models.query import QuerySet
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import TemplateView, RedirectView
-from django.views.generic import ListView, DetailView
-
+from django.views.generic import ListView, DetailView, FormView
+from .form import PostForm
 from .models import Post
+
 # Create your views here.
 
 def indexView(request):
@@ -59,4 +61,13 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
-    
+
+
+class PostCreateView(FormView):
+    template_name = "blog/post_create.html"
+    form_class = PostForm
+    success_url = "/blog/post/"
+
+    def form_valid(self, form: Any) -> HttpResponse:
+        form.save()
+        return super().form_valid(form)
