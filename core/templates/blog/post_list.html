@@ -9,7 +9,7 @@
 <body>
     {% for post in posts %}
     <div>
-        <h1>{{post.title}}</h1>
+        <a href="{% url 'blog:post_detail' pk=post.id %}"><h1>{{post.title}}</h1></a>
         <h4>{{post.content}} / {{post.created_date}}</h4>
     </br>
     </div>
@@ -32,6 +32,6 @@
             {% endif %}
         </span>
     </div>
-    
+
 </body>
 </html>
