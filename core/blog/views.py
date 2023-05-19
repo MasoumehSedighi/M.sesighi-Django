@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import ListView, DetailView, FormView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .forms import PostForm
 from .models import Post
 
@@ -47,7 +48,8 @@ class RedirectToDjango(RedirectView):
         print(post)
         return super().get_redirect_url(*args, **kwargs)
 
-class PostListView(ListView):
+class PostListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+    permission_required = "blog.view_post"
     # model = Post
     # queryset = Post.objects.all()
     queryset = Post.objects.filter(status=True)
@@ -60,8 +62,10 @@ class PostListView(ListView):
     #     posts =  Post.objects.filter(status=False)
     #     return posts
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
+    # permission_required = "blog.view_post"
     model = Post
+
 
 '''
 class PostCreateView(FormView):
@@ -77,7 +81,7 @@ class PostCreateView(FormView):
         return super().form_valid(form)
 '''
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     # fields = ['author', 'title', 'content', 'status', 'category', 'published_date']
     form_class = PostForm
@@ -87,11 +91,12 @@ class PostCreateView(CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
     
-class PostEditView(UpdateView):
+class PostEditView(LoginRequiredMixin, UpdateView):
     model = Post
     form_class = PostForm
     success_url = '/blog/post/'
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+    permission_required = "blog.delete_post"
     model = Post
     success_url = "/blog/post/"
