@@ -10,7 +10,8 @@
     {% for post in posts %}
     <div>
         <a href="{% url 'blog:post_detail' pk=post.id %}"><h1>{{post.title}}</h1></a>
-        <h4>{{post.author}} / {{post.created_date}}</h4>
+        <h5>posted by : {{post.author.first_name}}</h5>
+        <h5>published : {{post.published_date}}</h5>
         <a href="{% url 'blog:post_edit' pk=post.id %}"><h3>Edit</h3></a>
         <a href="{% url 'blog:post_delete' pk=post.id %}"><h3>Delete</h3></a>
     </br>
