@@ -49,6 +49,9 @@ class PostListView(ListView):
     # queryset = Post.objects.all()
     queryset = Post.objects.filter(status=True)
     context_object_name = 'posts'
+    paginate_by = 2
+    ordering = 'id'
+
 
     # def get_queryset(self) -> QuerySet[Any]:
     #     posts =  Post.objects.filter(status=False)
