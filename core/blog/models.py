@@ -13,9 +13,9 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    catgory = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
     content = models.TextField()
-    status = models.BooleanField
+    status = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     published_date = models.DateTimeField()

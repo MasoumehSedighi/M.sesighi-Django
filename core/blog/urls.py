@@ -13,6 +13,7 @@ urlpatterns = [
     # class base views
     path('cbv_index', views.IndexView.as_view(), name ="cbv_index"),
     path("go-to-cbv_index/", RedirectView.as_view(pattern_name="blog:cbv_index"),name="go-to_cbv_index"),
-    path("cbv_redirect_django/<int:pk>/", views.RedirectToDjango.as_view(), name = "cbv_redirect_django")
+    path("cbv_redirect_django/<int:pk>/", views.RedirectToDjango.as_view(), name = "cbv_redirect_django"),
+    path("post", views.PostListView.as_view(), name="post_list")
 
 ]
