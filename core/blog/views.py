@@ -1,9 +1,10 @@
 from typing import Any
 from django.db.models.query import QuerySet
+from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import TemplateView, RedirectView
-from django.views.generic import ListView, DetailView, FormView
+from django.views.generic import ListView, DetailView, FormView, CreateView
 from .forms import PostForm
 from .models import Post
 
@@ -62,7 +63,7 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
 
-
+'''
 class PostCreateView(FormView):
     """
     create a post 
@@ -73,4 +74,15 @@ class PostCreateView(FormView):
 
     def form_valid(self, form: Any) -> HttpResponse:
         form.save()
+        return super().form_valid(form)
+'''
+
+class PostCreateView(CreateView):
+    model = Post
+    # fields = ['author', 'title', 'content', 'status', 'category', 'published_date']
+    form_class = PostForm
+    success_url = "/blog/post/"
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form.instance.author = self.request.user
         return super().form_valid(form)
